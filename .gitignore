@@ -1,0 +1,10 @@
+# dev environment
+.env
+.idea
+
+# packages
+build
+dist
+*.egg-info
+test
+
