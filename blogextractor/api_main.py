@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from blogextractor.resources import (
-    PageResource,
+    PostResource,
     ForumResource,
     TopicResource,
     # BlogResource
@@ -40,8 +40,8 @@ def create_app(config) -> Flask:
         )
     )
     api.add_resource(
-        PageResource,
-        '/{0}/page/'.format(
+        PostResource,
+        '/{0}/post/'.format(
             config.API_PATH
         )
     )

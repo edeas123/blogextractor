@@ -1,27 +1,30 @@
 from bs4 import BeautifulSoup
 from blogextractor.model import (
-    Post, User
+    Page, Topic, Forum, User
 )
-from blogextractor.util import to_datetime
 import requests
 
 
 class TopicExtractor:
 
-    def __init__(self, blog, topic_id, page_number=0):
+    def __init__(self, blog, forum, page_number=0):
         self.blog = blog
-        self.topic_id = topic_id
+        self.forum = forum
         self.page_number = page_number
 
         self.domain_url = 'http://www.{0}.com'.format(
             blog
         )
-        self.page_url = '{0}/{1}'.format(
+        self.forum_url = '{0}/{1}'.format(
             self.domain_url,
-            self.topic_id,
+            forum
+        )
+        self.page_url = '{0}/{1}'.format(
+            self.forum_url,
             page_number
         )
 
+    # request the html page from the page url
     def request_page(self):
         r = requests.get(url=self.page_url)
         if r.status_code != 200:
@@ -31,110 +34,74 @@ class TopicExtractor:
                     r.reason
                 )
             )
+            # TODO: return an appropriate message
             return None
+
         return r.text
 
-    def parse_topic(self, page):
+    # parse the html page and return the page data
+    def parse_topic(self, html_page):
 
-        """
-        Parse_article => uses request to retrieve first page
-            of article, and uses soup to extract content of the page..
-        """
+        soup = BeautifulSoup(html_page, "lxml")
 
-        comments = []
-        offset = 0
+        # parse number of pages
+        # number_of_pages = int(soup.body.div.div.next_sibling.find_all("b")[1].text)
 
-        # parse
-        soup = BeautifulSoup(page, "lxml")
-        posts = soup.find("table", {"summary": "posts"})
-        tds = posts.find_all("td")
+        # parse topics on current pages
+        core = soup.body.find_all("table")[2]
+        tds = core.findAll("td")
 
-        for i in range(0, len(tds), 2):
-            comment = {}
-            i -= offset
-            # print i,
-            # retrieve timestamp info
-            #        print tds[i]
-            details = tds[i].find("span", {"class": "s"})
-            if details:
-                details = details.find_all("b")
+        topics = []
+        page = Page(
+            forum=Forum(name=self.forum),
+            page_number=self.page_number
+        )
+
+        for td in tds:
+            a_data = td.find_all("a")
+
+            _id = a_data[0].get("name")
+            title = a_data[1].text
+            # info['creator'] = a_data[-2].text
+            url = "{}{}".format(self.domain_url, a_data[1].get("href"))
+
+            s_spans = td.find("span", {"class": "s"})
+            s_spans_b = s_spans.find_all("b")
+
+            users = s_spans.find_all("a")
+            if len(users) == 2:  # first and last user is valid
+                creator = users[0].text
+                comments = int(s_spans_b[1].text)
+                views = int(s_spans_b[2].text)
             else:
-                # print "bug",
-                offset += 1
-                continue
+                creator = None
+                comments = int(s_spans_b[0].text)
+                views = int(s_spans_b[1].text)
 
-            time = details[0].text
-            if len(details) > 1:
-                day = details[1].text
-            else:
-                day = "July 17"
-
-            if len(details) > 2:
-                year = details[2].text
-            else:
-                year = "2017"
-
-            # retrieve poster info
-            details = tds[i].find_all("a")
-            _id = details[0].get("name")
-
-            if len(details) <= 4:
-                user = None
-            else:
-                user = details[-1].text
-
-            # retrieve content info
-            links = len(tds[i + 1].find("div", {"class": "narrow"}).find_all("a"))
-            likes = tds[i + 1].find("p", {"class": "s"})
-            if likes:
-                likes = likes.find_all("b")[0].text.strip()
-
-            if not likes:
-                likes = 0
-            else:
-                likes = int(likes.split()[0])
-
-            shares = tds[i + 1].find("p", {"class": "s"})
-            if shares:
-                shares = shares.find_all("b")[1].text.strip()
-
-            if not shares:
-                shares = 0
-            else:
-                shares = int(shares.split()[0])
-
-            images = len(tds[i + 1].find_all("img", {"class": "attachmentimage"}))
-
-            quoting = False
-            quote = tds[i + 1].find("div", {"class": "narrow"}).find("blockquote")
-            if quote:
-                quoting = True
-
-            post = Post(
-                _id=_id,
-                user=User(name=user),
-                ts=to_datetime(time, day, year),
-                number_of_likes=likes,
-                number_of_shares=shares,
-                requotes=quoting,
-                number_of_links=links,
-                number_of_images=images
+            topics.append(
+                Topic(
+                    _id=_id,
+                    title=title,
+                    url=url,
+                    creator=User(name=creator),
+                    number_of_posts=comments,
+                    number_of_views=views
+                )
             )
+        page.topics = topics
 
-            comments.append(post)
-
-        return comments
+        return page
 
 
 class NairalandTopicExtractor(TopicExtractor):
 
-    def __init__(self, blog, topic_id, page_number=0):
+    def __init__(self, blog, forum, page_number=0):
         super(
             NairalandTopicExtractor,
             self
         ).__init__(
             blog=blog,
-            topic_id=topic_id,
+            forum=forum,
             page_number=page_number
         )
 
@@ -143,11 +110,12 @@ class NairalandTopicExtractor(TopicExtractor):
     ):
 
         # request the page
-        html = self.request_page()
+        html_page = self.request_page()
 
         # TODO: check for errors
         # by returning the appropriate error code
         # perhaps using abort(code)
 
         # parse the page
-        return self.parse_topic(html)
+        return self.parse_topic(html_page)
+

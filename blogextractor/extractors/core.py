@@ -1,7 +1,7 @@
 
-from blogextractor.extractors.page import NairalandForumPageExtractor
-from blogextractor.extractors.forum import NairalandForumExtractor
 from blogextractor.extractors.topic import NairalandTopicExtractor
+from blogextractor.extractors.forum import NairalandForumExtractor
+from blogextractor.extractors.post import NairalandPostExtractor
 
 
 # use a factory function to return the appropriate extractor class
@@ -15,8 +15,8 @@ def get_extractor(blog, type):
         'nairaland':
             {
                 'forum': NairalandForumExtractor,
-                'page': NairalandForumPageExtractor,
-                'topic': NairalandTopicExtractor
+                'topic': NairalandTopicExtractor,
+                'post': NairalandPostExtractor
             }
     }[blog][type]
 
