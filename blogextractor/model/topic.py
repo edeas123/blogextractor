@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields
-from blogcrawler.model import (
+from blogextractor.model import (
     UserSchema,
     PostSchema
 )

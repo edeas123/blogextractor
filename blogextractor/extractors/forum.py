@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from blogcrawler.model import Forum
+from blogextractor.model import Forum
 import requests
 
 

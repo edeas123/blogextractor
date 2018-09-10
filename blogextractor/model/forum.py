@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields
-from blogcrawler.model import PageSchema
+from blogextractor.model import PageSchema
 
 
 class Forum(object):

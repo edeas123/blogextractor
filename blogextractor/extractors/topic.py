@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
-from blogcrawler.model import (
+from blogextractor.model import (
     Post, User
 )
-from blogcrawler.util import to_datetime
+from blogextractor.util import to_datetime
 import requests
 
 

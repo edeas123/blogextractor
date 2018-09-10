@@ -4,12 +4,12 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='blogcrawler',
+    name='blogextractor',
     version='0.0.1',
     description='Crawl local blogs',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url='https://github.com/edeas123/blogcrawler',
+    url='https://github.com/edeas123/blogextractor',
     author='Obaro Odiete',
     packages=setuptools.find_packages(exclude=('tests', 'docs')),
     install_requires=[

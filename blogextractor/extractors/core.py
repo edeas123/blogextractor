@@ -1,7 +1,7 @@
 
-from blogcrawler.extractors.page import NairalandForumPageExtractor
-from blogcrawler.extractors.forum import NairalandForumExtractor
-from blogcrawler.extractors.topic import NairalandTopicExtractor
+from blogextractor.extractors.page import NairalandForumPageExtractor
+from blogextractor.extractors.forum import NairalandForumExtractor
+from blogextractor.extractors.topic import NairalandTopicExtractor
 
 
 # use a factory function to return the appropriate extractor class

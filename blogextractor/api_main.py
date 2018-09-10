@@ -1,12 +1,12 @@
 from flask import Flask
 from flask_restful import Api
-from blogcrawler.resources import (
+from blogextractor.resources import (
     PageResource,
     ForumResource,
     TopicResource,
     # BlogResource
 )
-from blogcrawler.config import load_config
+from blogextractor.config import load_config
 # TODO: use the __init__ module import and find out why
 
 

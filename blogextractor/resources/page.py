@@ -1,8 +1,8 @@
 from flask_restful import Resource, reqparse
-from blogcrawler.extractors.core import (
+from blogextractor.extractors.core import (
     get_extractor
 )
-from blogcrawler.model import PageSchema
+from blogextractor.model import PageSchema
 
 
 class PageResource(Resource):

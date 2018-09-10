@@ -1,5 +1,6 @@
 from marshmallow import Schema, fields
 
+
 class User(object):
     def __init__(
         self, name, gender=None

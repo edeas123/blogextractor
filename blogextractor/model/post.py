@@ -1,14 +1,15 @@
 from marshmallow import Schema, fields
-from blogcrawler.model import UserSchema
+from blogextractor.model import UserSchema
 
 
 class Post(object):
     def __init__(
-        self, _id, user=None, ts=None, number_of_likes=None,
+        self, _id, title=None, user=None, ts=None, number_of_likes=None,
         number_of_shares=None, requotes=None, number_of_links=None,
         number_of_images=None
     ):
         self.id = _id
+        self.title = title
         self.user = user
         self.ts = ts
         self.number_of_likes = number_of_likes
@@ -24,6 +25,7 @@ class PostSchema(Schema):
         ordered = True
 
     id = fields.Integer()
+    title = fields.Nested('TopicSchema', only='title')
     user = fields.Nested(UserSchema, only='name')
     ts = fields.DateTime()
     number_of_likes = fields.Integer()
