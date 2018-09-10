@@ -7,7 +7,7 @@ class Forum(object):
         self, name=None, sub_forums=None,
         number_of_pages=None, forum_pages=None,
         ad_rate=None, ad_period=None,
-        percent_discount=None
+        percent_discount=None, retrieved_on=None
     ):
 
         self.name = name
@@ -17,6 +17,7 @@ class Forum(object):
         self.percent_discount = percent_discount
         self.number_of_pages = number_of_pages
         self.forum_pages = forum_pages
+        self.retrieved_on = retrieved_on
 
 
 class ForumSchema(Schema):
@@ -31,3 +32,4 @@ class ForumSchema(Schema):
     sub_forums = fields.Nested('self', many=True, only='name')
     number_of_pages = fields.Integer()
     forum_pages = fields.Nested(PageSchema, many=True)
+    retrieved_on = fields.DateTime()

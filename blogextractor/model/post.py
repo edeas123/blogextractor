@@ -6,7 +6,7 @@ class Post(object):
     def __init__(
         self, _id, title=None, user=None, ts=None, number_of_likes=None,
         number_of_shares=None, requotes=None, number_of_links=None,
-        number_of_images=None
+        number_of_images=None, retrieved_on=None
     ):
         self.id = _id
         self.title = title
@@ -17,6 +17,7 @@ class Post(object):
         self.number_of_links = number_of_links
         self.number_of_images = number_of_images
         self.requotes = requotes
+        self.retrieved_on = retrieved_on
 
 
 class PostSchema(Schema):
@@ -33,3 +34,4 @@ class PostSchema(Schema):
     requotes = fields.Boolean()
     number_of_links = fields.Integer()
     number_of_images = fields.Integer()
+    retrieved_on = fields.DateTime()
