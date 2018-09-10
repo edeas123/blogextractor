@@ -1,2 +1,2 @@
 # blogextractor
-microservice to crawl blogs, returning data as json
+Microservice to extract information from blogs, returning extracted data in JSON format
