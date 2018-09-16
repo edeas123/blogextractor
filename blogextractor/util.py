@@ -12,7 +12,7 @@ def to_datetime(time, day, year, offset):
     :return: datetime object
     """
     current_ts = datetime.utcnow() + timedelta(hours=offset)
-    print(time, day, year, offset)
+
     if time:
         [hr, mn] = time.split(':')
         if mn.endswith('am'):
