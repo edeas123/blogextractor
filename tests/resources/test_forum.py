@@ -1,9 +1,9 @@
-from tests.resources.core import ResourcesTestCase
+from tests.resources.core import ResourceTestCase
 from unittest.mock import patch
 from tests.resources.util import get_page
 
 
-class NairalandForumResourceTestCase(ResourcesTestCase):
+class NairalandForumResourceTestCase(ResourceTestCase):
 
     def setUp(self):
         super().setUp()
