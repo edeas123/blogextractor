@@ -12,13 +12,15 @@ def to_datetime(time, day, year, offset):
     :return: datetime object
     """
     current_ts = datetime.utcnow() + timedelta(hours=offset)
-
+    print(time, day, year, offset)
     if time:
         [hr, mn] = time.split(':')
         if mn.endswith('am'):
             hour = int(hr)
         else:
             hour = int(hr) + 12
+            if hour == 24:
+                hour = 0
         minute = int(mn[:-2])
     else:
         hour = 0
