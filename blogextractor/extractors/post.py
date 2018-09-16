@@ -16,7 +16,7 @@ class PostExtractor:
         self.domain_url = 'http://www.{0}.com'.format(
             blog
         )
-        self.page_url = '{0}/{1}'.format(
+        self.page_url = '{0}/{1}/{2}'.format(
             self.domain_url,
             self.topic_id,
             page_number
