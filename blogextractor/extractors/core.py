@@ -1,7 +1,8 @@
-
-from blogextractor.extractors.topic import NairalandTopicExtractor
-from blogextractor.extractors.forum import NairalandForumExtractor
-from blogextractor.extractors.post import NairalandPostExtractor
+from blogextractor.extractors import (
+    NairalandTopicExtractor,
+    NairalandForumExtractor,
+    NairalandPostExtractor
+)
 
 
 # use a factory function to return the appropriate extractor class
