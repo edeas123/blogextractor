@@ -67,12 +67,12 @@ class PostExtractor:
             if len(details) > 1:
                 day = details[1].text
             else:
-                day = "July 17"
+                day = None
 
             if len(details) > 2:
                 year = details[2].text
             else:
-                year = "2017"
+                year = None
 
             # retrieve poster info
             details = tds[i].find_all("a")
@@ -113,7 +113,7 @@ class PostExtractor:
             post = Post(
                 _id=_id,
                 user=User(name=user),
-                ts=to_datetime(time, day, year),
+                ts=to_datetime(time, day, year, offset=1),
                 number_of_likes=likes,
                 number_of_shares=shares,
                 requotes=quoting,
