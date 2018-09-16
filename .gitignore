@@ -10,3 +10,6 @@ test
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
+
+# Others
+.DS_Store
