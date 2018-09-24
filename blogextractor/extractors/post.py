@@ -50,7 +50,7 @@ class PostExtractor:
         tds = posts.find_all("td")
 
         for i in range(0, len(tds), 2):
-            comment = {}
+
             i -= offset
             # print i,
             # retrieve timestamp info
@@ -84,7 +84,10 @@ class PostExtractor:
                 user = details[-1].text
 
             # retrieve content info
-            links = len(tds[i + 1].find("div", {"class": "narrow"}).find_all("a"))
+            links = len(tds[i + 1].find(
+                "div", {"class": "narrow"}
+            ).find_all("a"))
+
             likes = tds[i + 1].find("p", {"class": "s"})
             if likes:
                 likes = likes.find_all("b")[0].text.strip()
@@ -103,10 +106,15 @@ class PostExtractor:
             else:
                 shares = int(shares.split()[0])
 
-            images = len(tds[i + 1].find_all("img", {"class": "attachmentimage"}))
+            images = len(tds[i + 1].find_all(
+                "img", {"class": "attachmentimage"})
+            )
 
             quoting = False
-            quote = tds[i + 1].find("div", {"class": "narrow"}).find("blockquote")
+            quote = tds[i + 1].find(
+                "div", {"class": "narrow"}
+            ).find("blockquote")
+
             if quote:
                 quoting = True
 

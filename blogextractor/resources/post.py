@@ -40,4 +40,3 @@ class PostResource(Resource):
         # return data and status code
         # TODO: first check for errors in dump
         return self.schema.dump(result, many=True), 200
-

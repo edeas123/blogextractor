@@ -38,7 +38,9 @@ class ForumExtractor(object):
         soup = BeautifulSoup(html, "lxml")
 
         # parse number of pages
-        number_of_pages = int(soup.body.div.div.next_sibling.find_all("b")[1].text)
+        number_of_pages = int(
+            soup.body.div.div.next_sibling.find_all("b")[1].text
+        )
 
         forum = Forum(
             name=self.forum,
@@ -71,4 +73,3 @@ class NairalandForumExtractor(ForumExtractor):
 
         # parse the page
         return self.parse_forum(html)
-

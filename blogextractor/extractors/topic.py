@@ -44,9 +44,6 @@ class TopicExtractor:
 
         soup = BeautifulSoup(html_page, "lxml")
 
-        # parse number of pages
-        # number_of_pages = int(soup.body.div.div.next_sibling.find_all("b")[1].text)
-
         # parse topics on current pages
         core = soup.body.find_all("table")[2]
         tds = core.findAll("td")
@@ -118,4 +115,3 @@ class NairalandTopicExtractor(TopicExtractor):
 
         # parse the page
         return self.parse_topic(html_page)
-

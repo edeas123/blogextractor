@@ -20,4 +20,3 @@ def get_extractor(blog, type):
                 'post': NairalandPostExtractor
             }
     }[blog][type]
-

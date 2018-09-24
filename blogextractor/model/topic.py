@@ -7,7 +7,8 @@ from blogextractor.model import (
 
 class Topic(object):
     def __init__(
-        self, _id, title=None, url=None, rank=None, number_of_posts=None, number_of_views=None,
+        self, _id, title=None, url=None, rank=None,
+        number_of_posts=None, number_of_views=None,
         creator=None, last_comment_by=None, last_comment_at=None,
         number_of_pages=None, comments=None, retrieved_on=None
     ):
@@ -42,8 +43,3 @@ class TopicSchema(Schema):
     number_of_pages = fields.Integer()
     comments = fields.Nested(PostSchema, allow_none=True)
     retrieved_on = fields.DateTime()
-
-
-
-
-

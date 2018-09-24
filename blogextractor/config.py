@@ -16,7 +16,9 @@ class Config(object):
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # define the default config file
-CONFIG_FILE_NAME = "environment_{}.yml".format(os.environ.get('APP_ENVIRONMENT', 'local'))
+CONFIG_FILE_NAME = "environment_{}.yml".format(
+    os.environ.get('APP_ENVIRONMENT', 'local')
+)
 DEFAULT_CONFIG_FILE = os.path.join(PROJECT_DIR, CONFIG_FILE_NAME)
 
 

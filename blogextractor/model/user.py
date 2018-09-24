@@ -11,7 +11,7 @@ class User(object):
 
 class UserSchema(Schema):
     name = fields.String()
-    gender = fields.String()  # TODO: how do you handle just two (like enum): M & F
+    gender = fields.String()  # TODO: how do you handle just two (like enum)
     comments = fields.Nested('PostSchema', many=True)
     # TODO: can we also add reference to the posted articles,
     # it will be interesting because it is already ref from there

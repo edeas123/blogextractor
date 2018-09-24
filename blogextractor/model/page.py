@@ -26,7 +26,7 @@ class PageSchema(Schema):
         ordered = True
 
     page_number = fields.Integer()
-    forum = fields.Nested('ForumSchema', only='name')  # just to remember it can be done this way too
+    forum = fields.Nested('ForumSchema', only='name')
     topics = fields.Nested(TopicSchema, many=True, only=('id', 'title'))
     viewers = fields.Nested(UserSchema, only='name')
     number_of_guests = fields.Integer()
