@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 from requests.models import Response
 from unittest.mock import Mock
 
-DATA_DIR = '../data'
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
 
 def get_page(url):

@@ -1,6 +1,6 @@
 from tests.resources.core import ResourceTestCase
 from unittest.mock import patch
-from tests.resources.util import get_page
+from tests.util import get_page
 
 
 class NairalandForumResourceTestCase(ResourceTestCase):

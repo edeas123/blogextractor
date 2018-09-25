@@ -1,5 +1,5 @@
 from tests.resources.core import ResourceTestCase
-from tests.resources.util import get_page
+from tests.util import get_page
 from unittest.mock import patch
 
 
