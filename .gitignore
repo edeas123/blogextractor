@@ -13,3 +13,9 @@ __pycache__/
 
 # Others
 .DS_Store
+
+# mypy
+.mypy_cache
+
+# tox
+.tox
