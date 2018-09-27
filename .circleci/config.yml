@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: python/python:3.6.6-alpine
+      - image: python:3.6.6-alpine
     steps:
       - checkout
       - run: echo "Just getting warmed up with circle-ci"
