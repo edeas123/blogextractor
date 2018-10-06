@@ -38,7 +38,7 @@ jobs:
           command: pip install tox==2.9.1
       - run:
           name: Integration
-          command: tox -e integration_test
+          command: tox -e integration
 workflows:
   version: 2
   built_test_deploy:
