@@ -5,8 +5,8 @@ jobs:
       - image: python:3.6.6-alpine
     steps:
       - checkout
-      # this next run would not be necessary if you
-      # include tox in your base image
+      # this next two run would not be necessary if you
+      # include them in your base image
       - run:
           name: Install Tox
           command: pip install tox==2.9.1
@@ -18,8 +18,11 @@ jobs:
       - image: python:3.6.6-alpine
     steps:
       - checkout
-      # this next run would not be necessary if you
-      # include tox in your base image
+      # this next two run would not be necessary if you
+      # include them in your base image
+      - run:
+          name: Install dependencies
+          command: apk add libxml2-dev libxslt-dev python-dev
       - run:
           name: Install Tox
           command: pip install tox==2.9.1
@@ -31,8 +34,11 @@ jobs:
       - image: python:3.6.6-alpine
     steps:
       - checkout
-      # this next run would not be necessary if you
-      # include tox in your base image
+      # this next two run would not be necessary if you
+      # include them in your base image
+      - run:
+          name: Install dependencies
+          command: apk add libxml2-dev libxslt-dev python-dev
       - run:
           name: Install Tox
           command: pip install tox==2.9.1
