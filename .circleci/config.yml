@@ -2,11 +2,11 @@ version: 2
 jobs:
   flake8_test:
     docker:
-      - image: python:3.6.6-alpine
+      - image: python:3.6.6
     steps:
       - checkout
       # this next two run would not be necessary if you
-      # include them in your base image
+      # include tox in your base image
       - run:
           name: Install Tox
           command: pip install tox==2.9.1
@@ -15,14 +15,11 @@ jobs:
           command: tox -e flake8
   mypy_test:
     docker:
-      - image: python:3.6.6-alpine
+      - image: python:3.6.6
     steps:
       - checkout
       # this next two run would not be necessary if you
-      # include them in your base image
-      - run:
-          name: Install dependencies
-          command: apk add libxml2-dev libxslt-dev python-dev
+      # include tox in your base image
       - run:
           name: Install Tox
           command: pip install tox==2.9.1
@@ -31,14 +28,11 @@ jobs:
           command: tox -e mypy
   integration_test:
     docker:
-      - image: python:3.6.6-alpine
+      - image: python:3.6.6
     steps:
       - checkout
       # this next two run would not be necessary if you
-      # include them in your base image
-      - run:
-          name: Install dependencies
-          command: apk add libxml2-dev libxslt-dev python-dev
+      # include tox in your base image
       - run:
           name: Install Tox
           command: pip install tox==2.9.1
