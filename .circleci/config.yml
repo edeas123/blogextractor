@@ -2,7 +2,7 @@ version: 2
 jobs:
   flake8_test:
     docker:
-      - image: python:3.6.6-alpine
+      - image: python:3.6.6
     steps:
       - checkout
       # this next run would not be necessary if you
@@ -15,7 +15,7 @@ jobs:
           command: tox -e flake8
   mypy_test:
     docker:
-      - image: python:3.6.6-alpine
+      - image: python:3.6.6
     steps:
       - checkout
       # this next run would not be necessary if you
@@ -28,7 +28,7 @@ jobs:
           command: tox -e mypy
   integration_test:
     docker:
-      - image: python:3.6.6-alpine
+      - image: python:3.6.6
     steps:
       - checkout
       # this next run would not be necessary if you
