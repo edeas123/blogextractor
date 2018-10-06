@@ -5,7 +5,7 @@ jobs:
       - image: python:3.6.6
     steps:
       - checkout
-      # this next two run would not be necessary if you
+      # this next run would not be necessary if you
       # include tox in your base image
       - run:
           name: Install Tox
@@ -18,7 +18,7 @@ jobs:
       - image: python:3.6.6
     steps:
       - checkout
-      # this next two run would not be necessary if you
+      # this next run would not be necessary if you
       # include tox in your base image
       - run:
           name: Install Tox
@@ -31,7 +31,7 @@ jobs:
       - image: python:3.6.6
     steps:
       - checkout
-      # this next two run would not be necessary if you
+      # this next run would not be necessary if you
       # include tox in your base image
       - run:
           name: Install Tox
