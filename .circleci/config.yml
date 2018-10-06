@@ -1,8 +1,33 @@
 version: 2
 jobs:
-  build:
+  flake8_test:
     docker:
       - image: python:3.6.6-alpine
     steps:
       - checkout
-      - run: echo "Just getting warmed up with circle-ci"
+      - run:
+        name: Linting
+        command: tox -e flake8
+  mypy_test:
+    docker:
+      - image: python:3.6.6-alpine
+    steps:
+      - checkout
+      - run:
+        name: Static Typing
+        command: tox -e mypy
+  integration_test:
+    docker:
+      - image: python:3.6.6-alpine
+    steps:
+      - checkout
+      - run:
+        name: Integration
+        command: tox -e integration_test
+workflows:
+  version: 2
+  built_test_deploy:
+    jobs:
+      - flake8_test
+      - mypy_test
+      - integration_test
