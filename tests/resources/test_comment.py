@@ -19,8 +19,7 @@ class NairalandCommentResourceTestCase(ResourceTestCase):
             'requotes': False,
             'number_of_links': 2,
             'number_of_images': 2,
-            'number_of_words': None,
-            'retrieved_on': None
+            'number_of_words': None
         }
         self.last_comment = {
             'id': 70986722,
@@ -32,8 +31,7 @@ class NairalandCommentResourceTestCase(ResourceTestCase):
             'requotes': False,
             'number_of_links': 0,
             'number_of_images': 0,
-            'number_of_words': None,
-            'retrieved_on': None
+            'number_of_words': None
         }
 
     @patch('requests.get')
@@ -54,5 +52,8 @@ class NairalandCommentResourceTestCase(ResourceTestCase):
 
             # load the resp text into json and assert content
             resp_json = resp.json
+
+            del resp_json[0]['retrieved_on']
+            del resp_json[-1]['retrieved_on']
             self.assertEqual(resp_json[0], self.first_comment)
             self.assertEqual(resp_json[-1], self.last_comment)

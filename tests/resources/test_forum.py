@@ -20,8 +20,7 @@ class NairalandForumResourceTestCase(ResourceTestCase):
             'number_of_pages': 8626,
             'page_number': None,
             'viewers': self.viewers,
-            'number_of_guests': None,
-            'retrieved_on': None
+            'number_of_guests': None
         }
         self.first_topic = {
             'id': '3463',
@@ -33,8 +32,7 @@ class NairalandForumResourceTestCase(ResourceTestCase):
             'creator': 'conscience',
             'last_comment_by': 'conscience',
             'last_comment_at': None,
-            'number_of_pages': None,
-            'retrieved_on': None
+            'number_of_pages': None
         }
         self.last_topic = {
             'id': '2036',
@@ -46,8 +44,7 @@ class NairalandForumResourceTestCase(ResourceTestCase):
             'creator': 'skima',
             'last_comment_by': 'Seun',
             'last_comment_at': None,
-            'number_of_pages': None,
-            'retrieved_on': None
+            'number_of_pages': None
         }
 
     @patch('requests.get')
@@ -70,10 +67,13 @@ class NairalandForumResourceTestCase(ResourceTestCase):
             resp_json = resp.json
 
             # assert the first and last topics are as expected
+            del resp_json['topics'][0]['retrieved_on']
+            del resp_json['topics'][-1]['retrieved_on']
             self.assertEqual(resp_json['topics'][0], self.first_topic)
             self.assertEqual(resp_json['topics'][-1], self.last_topic)
 
             del resp_json['topics']
+            del resp_json['retrieved_on']
 
             # assert the forum object is as expected
             self.assertEqual(resp_json, self.expected)
