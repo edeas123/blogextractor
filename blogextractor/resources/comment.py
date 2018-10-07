@@ -1,16 +1,16 @@
 from flask_restful import Resource, reqparse
+from blogextractor.model import CommentSchema
 from blogextractor.extractors.util import (
     get_extractor
 )
-from blogextractor.model import ForumSchema
 from blogextractor.util import get_domain
 from marshmallow.exceptions import ValidationError
 from requests import HTTPError
 
 
-class ForumResource(Resource):
+class CommentResource(Resource):
 
-    schema = ForumSchema()
+    schema = CommentSchema()
 
     def get(self):
 
@@ -21,10 +21,10 @@ class ForumResource(Resource):
         args = parser.parse_args()
         url = args['url']
 
-        # use the blog name to get the correct extractor
+        # use the blog name to get the extractor
         try:
             domain = get_domain(url)
-            extractor = get_extractor(domain, 'forum')
+            extractor = get_extractor(domain, 'comment')
             data = extractor(url=url).extract()
         except TypeError as e:
             # log the error to sumo logic
@@ -34,11 +34,11 @@ class ForumResource(Resource):
             return str(e), 404
         except Exception as e:
             # log unknown exception
-            return e.with_traceback()
+            return str(e)
 
         # return data and status code
         try:
-            result = self.schema.dump(data)
+            result = self.schema.dump(data, many=True)
         except ValidationError as e:
             return str(e), 422
 

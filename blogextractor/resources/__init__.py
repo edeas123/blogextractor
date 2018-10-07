@@ -1,3 +1,2 @@
-from .topic import TopicResource
-from .post import PostResource
+from .comment import CommentResource
 from .forum import ForumResource

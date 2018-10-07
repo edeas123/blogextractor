@@ -6,7 +6,7 @@ from unittest.mock import Mock
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
 
-def get_page(url):
+def get_page(url: str):
     p_url = urlparse(url)
     filename = os.path.join(
         DATA_DIR,

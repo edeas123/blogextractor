@@ -1,22 +1,12 @@
-from blogextractor.extractors import (
-    NairalandTopicExtractor,
-    NairalandForumExtractor,
-    NairalandPostExtractor
-)
+import requests
 
 
-# use a factory function to return the appropriate extractor class
-def get_extractor(blog, type):
-    if not blog:
-        # TODO: throw an appropriate error or exception
-        # e.g. value error
-        return
+class Extractor(object):
 
-    return {
-        'nairaland':
-            {
-                'forum': NairalandForumExtractor,
-                'topic': NairalandTopicExtractor,
-                'post': NairalandPostExtractor
-            }
-    }[blog][type]
+    # request the html page from the page url
+    @staticmethod
+    def request_page(url: str) -> str:
+        r = requests.get(url=url)
+        r.raise_for_status()
+
+        return r.text
