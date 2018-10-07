@@ -4,6 +4,7 @@ from blogextractor.model import (
 )
 from blogextractor.util import to_datetime
 from blogextractor.extractors.core import Extractor
+from datetime import datetime
 
 
 class NairalandCommentExtractor(Extractor):
@@ -20,6 +21,7 @@ class NairalandCommentExtractor(Extractor):
 
         # request the page
         page = self.request_page(url=self.url)
+        retrieved_on = datetime.utcnow()
 
         # parse
         soup = BeautifulSoup(page, "lxml")
@@ -100,7 +102,8 @@ class NairalandCommentExtractor(Extractor):
                 number_of_shares=shares,
                 requotes=quoting,
                 number_of_links=links,
-                number_of_images=images
+                number_of_images=images,
+                retrieved_on=retrieved_on
             )
 
             comments.append(post)

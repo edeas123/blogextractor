@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from blogextractor.model import Forum, Topic, User
 from blogextractor.extractors.core import Extractor
+from datetime import datetime
 
 
 class NairalandForumExtractor(Extractor):
@@ -14,6 +15,7 @@ class NairalandForumExtractor(Extractor):
 
         # request the page
         html = self.request_page(url=self.url)
+        retrieved_on = datetime.utcnow()
 
         # parse the page
         soup = BeautifulSoup(html, "lxml")
@@ -75,7 +77,8 @@ class NairalandForumExtractor(Extractor):
                     creator=User(name=creator),
                     number_of_posts=comments,
                     number_of_views=views,
-                    last_comment_by=User(name=last_comment_by)
+                    last_comment_by=User(name=last_comment_by),
+                    retrieved_on=retrieved_on
                 )
             )
 
@@ -83,7 +86,8 @@ class NairalandForumExtractor(Extractor):
         forum = Forum(
             url=self.url,
             number_of_pages=number_of_pages,
-            topics=topics
+            topics=topics,
+            retrieved_on=retrieved_on
         )
 
         return forum
