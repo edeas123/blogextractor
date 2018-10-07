@@ -1,48 +1,25 @@
 from bs4 import BeautifulSoup
 from blogextractor.model import (
-    Post, User
+    User, Comment
 )
 from blogextractor.util import to_datetime
-import requests
+from blogextractor.extractors.core import Extractor
 
 
-class PostExtractor:
+class NairalandCommentExtractor(Extractor):
 
-    def __init__(self, blog, topic_id, page_number=0):
-        self.blog = blog
-        self.topic_id = topic_id
-        self.page_number = page_number
+    def __init__(self, url):
+        super().__init__()
+        self.url = url
 
-        self.domain_url = 'http://www.{0}.com'.format(
-            blog
-        )
-        self.page_url = '{0}/{1}/{2}'.format(
-            self.domain_url,
-            self.topic_id,
-            page_number
-        )
-
-    def request_page(self):
-        r = requests.get(url=self.page_url)
-        if r.status_code != 200:
-            print(
-                "{0}: {1}".format(
-                    r.status_code,
-                    r.reason
-                )
-            )
-            return None
-        return r.text
-
-    def parse_post(self, page):
-
-        """
-        Parse_article => uses request to retrieve first page
-            of article, and uses soup to extract content of the page..
-        """
+    # parse the html page and return the data
+    def extract(self):
 
         comments = []
         offset = 0
+
+        # request the page
+        page = self.request_page(url=self.url)
 
         # parse
         soup = BeautifulSoup(page, "lxml")
@@ -52,9 +29,6 @@ class PostExtractor:
         for i in range(0, len(tds), 2):
 
             i -= offset
-            # print i,
-            # retrieve timestamp info
-            #        print tds[i]
             details = tds[i].find("span", {"class": "s"})
             if details:
                 details = details.find_all("b")
@@ -118,10 +92,10 @@ class PostExtractor:
             if quote:
                 quoting = True
 
-            post = Post(
+            post = Comment(
                 _id=_id,
-                user=User(name=user),
-                ts=to_datetime(time, day, year, offset=1),
+                created_by=User(name=user),
+                created_on=to_datetime(time, day, year, offset=1),
                 number_of_likes=likes,
                 number_of_shares=shares,
                 requotes=quoting,
@@ -132,30 +106,3 @@ class PostExtractor:
             comments.append(post)
 
         return comments
-
-
-class NairalandPostExtractor(PostExtractor):
-
-    def __init__(self, blog, topic_id, page_number=0):
-        super(
-            NairalandPostExtractor,
-            self
-        ).__init__(
-            blog=blog,
-            topic_id=topic_id,
-            page_number=page_number
-        )
-
-    def extract(
-        self
-    ):
-
-        # request the page
-        html = self.request_page()
-
-        # TODO: check for errors
-        # by returning the appropriate error code
-        # perhaps using abort(code)
-
-        # parse the page
-        return self.parse_post(html)

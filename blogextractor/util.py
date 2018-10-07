@@ -46,3 +46,14 @@ def to_datetime(time, day, year, offset):
         hour=hour,
         minute=minute
     )
+
+
+def get_domain(url):
+    """
+
+    :param url: url
+    :return: domain after parsing https://www.<domain>.com
+    """
+
+    domain = 'nairaland'
+    return domain

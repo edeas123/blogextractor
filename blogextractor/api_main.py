@@ -1,13 +1,10 @@
 from flask import Flask
 from flask_restful import Api
 from blogextractor.resources import (
-    PostResource,
     ForumResource,
-    TopicResource,
-    # BlogResource
+    CommentResource,
 )
 from blogextractor.config import load_config
-# TODO: use the __init__ module import and find out why
 
 
 def create_app(config) -> Flask:
@@ -16,22 +13,11 @@ def create_app(config) -> Flask:
         __name__
     )
 
-    # TODO:
-    # use the passed config object to
-    # update the app config
+    # use the passed config object to update the app config
     app.config.from_object(config)
 
     api = Api(app)
 
-    # add the resources: should be imported first
-    # TODO: add api to pull the forum info
-    # TODO: add api to pull the page data for a specified page
-    # TODO: add api to pull the data for a particular topic url
-
-    # api.add_resource(
-    #     BlogResource,
-    #     '/{0}/'.format(config.API_PATH)
-    # )
     # return a json object of Forum model in forum.py
     api.add_resource(
         ForumResource,
@@ -40,14 +26,8 @@ def create_app(config) -> Flask:
         )
     )
     api.add_resource(
-        PostResource,
-        '/{0}/post/'.format(
-            config.API_PATH
-        )
-    )
-    api.add_resource(
-        TopicResource,
-        '/{0}/topic/'.format(
+        CommentResource,
+        '/{0}/comment/'.format(
             config.API_PATH
         )
     )
