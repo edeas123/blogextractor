@@ -1,0 +1,24 @@
+# dev environment
+.env
+.idea
+
+# packages
+build
+dist
+*.egg-info
+test
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Others
+.DS_Store
+
+# mypy
+.mypy_cache
+
+# tox
+.tox
+
+# circleci
+.circleci
