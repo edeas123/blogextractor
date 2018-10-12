@@ -48,9 +48,15 @@ jobs:
     working_directory: ~/project
     steps:
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Login, Build and Push docker image
-          command: deploy/build_push_docker_image.sh
+          command: |
+            docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+            docker build -t blogextractor:latest .
+            docker tag blogextractor:latest edeas123/blogextractor:latest
+            docker push edeas123/blogextractor:latest
 
 workflows:
   version: 2
