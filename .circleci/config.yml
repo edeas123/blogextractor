@@ -42,6 +42,16 @@ jobs:
       - run:
           name: Integration
           command: tox -e integration
+  deploy:
+    docker:
+      - image: docker:18.06-git
+    working_directory: ~/project
+    steps:
+      - checkout
+      - run:
+          name: Login, Build and Push docker image
+          command: deploy/build_push_docker_image.sh
+
 workflows:
   version: 2
   built_test_deploy:
@@ -49,3 +59,13 @@ workflows:
       - flake8_test
       - mypy_test
       - integration_test
+      - deploy
+          context: edeas123
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - flake8_test
+            - mypy_test
+            - integration_test
