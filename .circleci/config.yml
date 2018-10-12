@@ -54,9 +54,9 @@ jobs:
           name: Login, Build and Push docker image
           command: |
             docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
-            docker build -t blogextractor:latest .
-            docker tag blogextractor:latest edeas123/blogextractor:latest
-            docker push edeas123/blogextractor:latest
+            docker build -t blogextractor .
+            docker tag blogextractor $DOCKER_HUB_USERNAME/blogextractor:latest
+            docker push $DOCKER_HUB_USERNAME/blogextractor:latest
 
 workflows:
   version: 2
