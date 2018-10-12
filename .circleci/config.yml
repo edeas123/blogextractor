@@ -42,6 +42,22 @@ jobs:
       - run:
           name: Integration
           command: tox -e integration
+  deploy:
+    docker:
+      - image: docker:18.06-git
+    working_directory: ~/project
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Login, Build and Push docker image
+          command: |
+            docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+            docker build -t blogextractor .
+            docker tag blogextractor $DOCKER_HUB_USERNAME/blogextractor:latest
+            docker push $DOCKER_HUB_USERNAME/blogextractor:latest
+
 workflows:
   version: 2
   built_test_deploy:
@@ -49,3 +65,13 @@ workflows:
       - flake8_test
       - mypy_test
       - integration_test
+      - deploy:
+          context: edeas123
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - flake8_test
+            - mypy_test
+            - integration_test

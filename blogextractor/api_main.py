@@ -35,6 +35,12 @@ def create_app(config) -> Flask:
     return app
 
 
+def uwsgi(environ, start_response):
+    app = create_app(load_config())
+
+    return app.wsgi_app(environ, start_response)
+
+
 if __name__ == "__main__":
 
     # read config from environment variables

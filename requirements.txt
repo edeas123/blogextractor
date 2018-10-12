@@ -9,3 +9,4 @@ mypy==0.630
 PyYAML==3.13
 requests==2.19.1
 urllib3==1.23
+uwsgi==2.0.17.1
