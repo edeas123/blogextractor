@@ -67,6 +67,10 @@ workflows:
       - integration_test
       - deploy:
           context: edeas123
+          filters:
+            branches:
+              only:
+                - master
           requires:
             - flake8_test
             - mypy_test
