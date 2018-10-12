@@ -59,7 +59,7 @@ workflows:
       - flake8_test
       - mypy_test
       - integration_test
-      - deploy
+      - deploy:
           context: edeas123
           filters:
             branches:
