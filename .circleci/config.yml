@@ -56,7 +56,7 @@ jobs:
           name: Build and Push to the TestPyPI
           command: |
             pip install setuptools wheel
-            python steup.py sdist bdist_wheel
+            python setup.py sdist bdist_wheel
             pip install twine
             twine upload --repository-url https://test.pypi.org/legacy/ dist/*
       - setup_remote_docker:
