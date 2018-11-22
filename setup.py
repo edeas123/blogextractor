@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name='blogextractor',
     version='0.0.2',
-    description='Crawl local blogs',
+    description='Extract data from blogs'
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/edeas123/blogextractor',
@@ -25,6 +25,7 @@ setuptools.setup(
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License"
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent"
     ]
 )

@@ -48,6 +48,17 @@ jobs:
     working_directory: ~/project
     steps:
       - checkout
+      - run:
+          name: Install CLI tools
+          command: |
+            apk --update add py-pip
+      - run:
+          name: Build and Push to the TestPyPI
+          command: |
+            pip install setuptools
+            python setup.py sdist
+            pip install twine
+            twine upload --repository-url https://test.pypi.org/legacy/ dist/*
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
