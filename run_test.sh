@@ -1,4 +1,5 @@
-#!/bin/bash -e
+#!/bin/bash
+set -exo pipefail
 
 # build docker image
 docker build -t blogextractor:latest -f TestDockerfile .
