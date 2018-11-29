@@ -77,14 +77,14 @@ jobs:
           name: Push docker image to AWS ECR
           command: |
             REVISION_TAG=$CIRCLE_SHA1
-            docker tag blogextractor $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blogextractor:REVISION_TAG
-            docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blogextractor:REVISION_TAG
+            docker tag blogextractor $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blogextractor:${REVISION_TAG}
+            docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blogextractor:${REVISION_TAG}
       - run:
           name: Push docker image to docker hub
           command: |
             REVISION_TAG=$CIRCLE_SHA1
-            docker tag blogextractor $DOCKER_HUB_USERNAME/blogextractor:REVISION_TAG
-            docker push $DOCKER_HUB_USERNAME/blogextractor:REVISION_TAG
+            docker tag blogextractor $DOCKER_HUB_USERNAME/blogextractor:${REVISION_TAG}
+            docker push $DOCKER_HUB_USERNAME/blogextractor:${REVISION_TAG}
 
 workflows:
   version: 2
@@ -98,7 +98,7 @@ workflows:
           filters:
             branches:
               only:
-                - dev
+                - master
           requires:
             - flake8_test
             - mypy_test
