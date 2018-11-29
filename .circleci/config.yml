@@ -65,19 +65,26 @@ jobs:
           name: Install CLI tools
           command: pip install awscli
       - run:
-          name: Login, Build and Push docker image to AWS ECR
-          command: |
-            eval `aws ecr get-login --no-include-email`
-            docker build -t blogextractor .
-            docker tag blogextractor $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blogextractor:latest
-            docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blogextractor:latest
+          name: Login to AWS ECR
+          command: eval `aws ecr get-login --no-include-email`
       - run:
-          name: Login, Build and Push docker image
+          name: Build docker image
+          command: docker build -t blogextractor .
+      - run:
+          name: Login to docker hub
+          command: docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+      - run:
+          name: Push docker image to AWS ECR
           command: |
-            docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
-            docker build -t blogextractor .
-            docker tag blogextractor $DOCKER_HUB_USERNAME/blogextractor:latest
-            docker push $DOCKER_HUB_USERNAME/blogextractor:latest
+            REVISION_TAG=$CIRCLE_SHA1
+            docker tag blogextractor $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blogextractor:REVISION_TAG
+            docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blogextractor:REVISION_TAG
+      - run:
+          name: Push docker image to docker hub
+          command: |
+            REVISION_TAG=$CIRCLE_SHA1
+            docker tag blogextractor $DOCKER_HUB_USERNAME/blogextractor:REVISION_TAG
+            docker push $DOCKER_HUB_USERNAME/blogextractor:REVISION_TAG
 
 workflows:
   version: 2
