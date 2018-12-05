@@ -19,7 +19,7 @@ setuptools.setup(
         'lxml==4.2.4',
         'marshmallow==3.0.0b13',
         'PyYAML==3.13',
-        'requests==2.19.1',
+        'requests==2.20.0',
         'urllib3==1.23',
         'uwsgi==2.0.17.1'
     ],
