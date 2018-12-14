@@ -18,4 +18,4 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 
 # run
-CMD ["uwsgi", "--ini", "uwsgi.ini"]
+CMD /usr/bin/supervisord -n -c supervisord.conf
