@@ -77,14 +77,14 @@ jobs:
           name: Push docker image to AWS ECR
           command: |
             REVISION_TAG=$CIRCLE_SHA1
-            docker tag blogextractor $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blogextractor:${REVISION_TAG}
-            docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blogextractor:${REVISION_TAG}
+            docker tag blogextractor $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blogextractor:latest
+            docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blogextractor:latest
       - run:
           name: Push docker image to docker hub
           command: |
             REVISION_TAG=$CIRCLE_SHA1
-            docker tag blogextractor $DOCKER_HUB_USERNAME/blogextractor:${REVISION_TAG}
-            docker push $DOCKER_HUB_USERNAME/blogextractor:${REVISION_TAG}
+            docker tag blogextractor $DOCKER_HUB_USERNAME/blogextractor:latest
+            docker push $DOCKER_HUB_USERNAME/blogextractor:latest
 
 workflows:
   version: 2
