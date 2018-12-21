@@ -1,9 +1,12 @@
 version: '3'
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: blogextractor:latest
     ports:
-     - "5000:5000"
+     - "80:80"
     labels:
       role: "webservice"
+    command: /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
