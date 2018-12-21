@@ -1,6 +1,5 @@
-
-# use an official python runtime as a base image
-FROM python:3.6.6
+# use project base image
+FROM edeas123/blogbase
 
 # set the working directory to /project
 WORKDIR /project
@@ -11,11 +10,15 @@ ENV PYTHONPATH /project
 # copy the current directory content into the container at /project
 COPY . /project
 
+# create required directories
+RUN mkdir /var/log/uwsgi\
+    && mkdir -p /etc/supervisor/conf.d/
+
+# add configuration files
+RUN echo_supervisord_conf >> /etc/supervisor/supervisord.conf\
+    && printf "\n[include]\nfiles=conf.d/*.conf" >> /etc/supervisor/supervisord.conf\
+    && cp /project/nginx.conf /etc/nginx/conf.d/nginx.conf\
+    && cp /project/supervisord.conf /etc/supervisor/conf.d/blogextractor.conf
+
 # install required dependencies
-RUN pip install -r requirements.txt
-
-# runtime configuration
-EXPOSE 5000
-
-# run
-CMD /usr/bin/supervisord -n -c supervisord.conf
+RUN pip3 install -r requirements.txt
