@@ -18,7 +18,6 @@ def create_app(config) -> Flask:
 
     api = Api(app)
 
-    # return a json object of Forum model in forum.py
     api.add_resource(
         ForumResource,
         '/{0}/forum/'.format(
@@ -43,9 +42,6 @@ def uwsgi(environ, start_response):
 
 if __name__ == "__main__":
 
-    # read config from environment variables
-    # or from file including things
-    # like the port and debug mode
     config = load_config()
     app = create_app(config)
-    app.run()
+    app.run(port=config.PORT, debug=config.DEBUG)
