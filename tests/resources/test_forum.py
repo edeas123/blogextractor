@@ -63,12 +63,13 @@ class NairalandForumResourceTestCase(ResourceTestCase):
             # assert that you got a 200 status code
             self.assertEqual(resp.status_code, 200)
 
-            # load the resp text into json and assert content
-            resp_json = resp.json
+            # load the resp text data into json and assert content
+            resp_json = resp.json['data']
 
             # assert the first and last topics are as expected
             del resp_json['topics'][0]['retrieved_on']
             del resp_json['topics'][-1]['retrieved_on']
+
             self.assertEqual(resp_json['topics'][0], self.first_topic)
             self.assertEqual(resp_json['topics'][-1], self.last_topic)
 

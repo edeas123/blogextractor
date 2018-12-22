@@ -51,7 +51,7 @@ class NairalandCommentResourceTestCase(ResourceTestCase):
             self.assertEqual(resp.status_code, 200)
 
             # load the resp text into json and assert content
-            resp_json = resp.json
+            resp_json = resp.json['data']
 
             del resp_json[0]['retrieved_on']
             del resp_json[-1]['retrieved_on']
