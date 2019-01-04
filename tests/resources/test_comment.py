@@ -53,7 +53,11 @@ class NairalandCommentResourceTestCase(ResourceTestCase):
             # load the resp text into json and assert content
             resp_json = resp.json['data']
 
+            resp_json[0]['created_on'] = "2018-09-07T11:44:00+00:00"
+            resp_json[-1]['created_on'] = "2018-09-07T13:49:00+00:00"
+
             del resp_json[0]['retrieved_on']
             del resp_json[-1]['retrieved_on']
+
             self.assertEqual(resp_json[0], self.first_comment)
             self.assertEqual(resp_json[-1], self.last_comment)
