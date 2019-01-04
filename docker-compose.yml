@@ -1,10 +1,7 @@
-version: '3'
+version: '2'
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: blogextractor:latest
+    image: edeas123/blogextractor:latest
     ports:
      - "80:80"
     labels:
