@@ -53,11 +53,11 @@ jobs:
           name: Login to AWS ECR
           command: eval `aws ecr get-login --no-include-email`
       - run:
-          name: Build docker image
-          command: docker build -t blogextractor .
-      - run:
           name: Login to docker hub
           command: docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+      - run:
+          name: Build docker image
+          command: docker build -t blogextractor .
       - run:
           name: Push docker image to AWS ECR
           command: |
