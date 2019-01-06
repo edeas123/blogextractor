@@ -7,8 +7,14 @@ WORKDIR /project
 # set environment variables
 ENV PYTHONPATH /project
 
+# copy the requirements file
+COPY requirements.txt requirements.txt
+
+# install required dependencies
+RUN pip3 install -r requirements.txt
+
 # copy the current directory content into the container at /project
-COPY . /project
+COPY . .
 
 # create required directories
 RUN mkdir /var/log/uwsgi\
@@ -20,5 +26,4 @@ RUN echo_supervisord_conf >> /etc/supervisor/supervisord.conf\
     && cp /project/nginx.conf /etc/nginx/conf.d/nginx.conf\
     && cp /project/supervisord.conf /etc/supervisor/conf.d/blogextractor.conf
 
-# install required dependencies
-RUN pip3 install -r requirements.txt
+

@@ -8,11 +8,14 @@ WORKDIR /project
 # set environment variables
 ENV PYTHONPATH /project
 
-# copy the current directory content into the container at /project
-COPY . /project
+# copy the requirements file
+COPY requirements.txt requirements.txt
 
 # install required dependencies
 RUN pip install -r requirements.txt
+
+# copy the current directory content into the container
+COPY . .
 
 # run tests
 CMD nosetests -v \
