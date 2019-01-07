@@ -1,6 +1,8 @@
 # dev environment
+.venv
 .env
 .idea
+.vscode
 
 # packages
 build
