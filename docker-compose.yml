@@ -1,9 +1,14 @@
 version: '2'
 services:
-  web:
+  blogextractor:
     image: edeas123/blogextractor:latest
-    ports:
-     - "80:80"
-    labels:
-      role: "webservice"
     command: /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+    tty: true
+    stdin_open: true
+    ports:
+      - "80:80"
+    labels:
+      io.rancher.container.pull_image: always
+      role: "webservice"
+    volumes:
+      - log:/var/log
