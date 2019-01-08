@@ -2,4 +2,17 @@ version: '2'
 services:
   blogextractor:
     scale: 2
-    start_on_create: true
+    start_on_create: false
+    health_check:
+      port: 80
+      interval: 10000
+      initializing_timeout: 60000
+      reinitializing_timeout: 60000
+      unhealthy_threshold: 3
+      strategy: recreateOnQuorum
+      recreate_on_quorum_strategy_config:
+        quorum: 1
+      healthy_threshold: 2
+      response_timeout: 2000
+    upgrade_strategy:
+      start_first: true
