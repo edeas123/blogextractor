@@ -1,14 +1,13 @@
 version: '2'
 services:
   blogextractor:
+    build: .
     image: edeas123/blogextractor:latest
     command: /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
     tty: true
     stdin_open: true
     ports:
-      - "80:80"
+      - "5000:5000"
     labels:
       io.rancher.container.pull_image: always
       role: "webservice"
-    volumes:
-      - log:/var/log
