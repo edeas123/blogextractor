@@ -3,7 +3,7 @@ services:
   blogextractor:
     build: .
     image: edeas123/blogextractor:latest
-    command: /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+    command: /usr/local/bin/uwsgi --ini /project/uwsgi.ini
     tty: true
     stdin_open: true
     ports:
