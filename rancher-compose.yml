@@ -1,6 +1,6 @@
 version: '2'
 services:
-  blogextractor:
+  web:
     scale: 2
     start_on_create: false
     health_check:
@@ -16,3 +16,19 @@ services:
       response_timeout: 2000
     upgrade_strategy:
       start_first: true
+  lb:
+    start_on_create: true
+    lb_config:
+      certs: []
+      port_rules:
+      - priority: 1
+        protocol: http
+        service: web
+        source_port: 80
+        target_port: 5000
+    health_check:
+      healthy_threshold: 2
+      response_timeout: 2000
+      port: 5000
+      unhealthy_threshold: 3
+      interval: 2000

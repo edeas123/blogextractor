@@ -1,13 +1,19 @@
 version: '2'
 services:
-  blogextractor:
+  web:
     build: .
     image: edeas123/blogextractor:latest
     command: /usr/local/bin/uwsgi --ini /project/uwsgi.ini
     tty: true
     stdin_open: true
-    ports:
-      - "5000:5000"
     labels:
       io.rancher.container.pull_image: always
       role: "webservice"
+  lb:
+    image: rancher/lb-service-haproxy:v0.9.1
+    ports:
+      - 80:5000/tcp
+    labels:
+      io.rancher.scheduler.global: 'true'
+      io.rancher.container.agent.role: environmentAdmin
+      io.rancher.container.create_agent: 'true'
