@@ -18,7 +18,7 @@ setuptools.setup(
         'Flask-RESTful==0.3.6',
         'lxml==4.2.4',
         'marshmallow==3.0.0b13',
-        'PyYAML==3.13',
+        'PyYAML==5.1',
         'requests==2.20.0',
         'urllib3==1.24.2',
         'uwsgi==2.0.17.1'
