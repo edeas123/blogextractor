@@ -1,4 +1,4 @@
-from tests.resources.core import ResourceTestCase
+from tests.integration.resources.core import ResourceTestCase
 from tests.util import get_page
 from unittest.mock import patch
 
