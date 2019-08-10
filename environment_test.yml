@@ -1,4 +1,0 @@
-API_PATH: 'api/v1'
-DEBUG: true
-TESTING: true
-ENV: 'test'

@@ -1,20 +1,15 @@
-version: '2'
+version: '3'
 services:
-  web:
-    build: .
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
     image: edeas123/blogextractor:latest
     command: /usr/local/bin/uwsgi --ini /project/uwsgi.ini
+    ports:
+      - 5000:5000
+    environment:
+      APP_ENV: docker
     tty: true
     stdin_open: true
-    labels:
-      io.rancher.container.pull_image: always
-      io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=blogextractor/web
-      role: "web-service"
-  lb:
-    image: rancher/lb-service-haproxy:v0.9.6
-    ports:
-      - 80:80/tcp
-    labels:
-      io.rancher.scheduler.global: 'true'
-      io.rancher.container.agent.role: environmentAdmin
-      io.rancher.container.create_agent: 'true'
+    restart: unless-stopped

@@ -1,0 +1,14 @@
+version: '3'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: blogextractor:latest
+    ports:
+      - 5000:5000
+    restart: "no"
+    environment:
+      - APP_ENV=local
+    working_dir: /project
+    command: bash -c "nosetests -v tests && flake8 --ignore=F401 blogextractor tests && mypy blogextractor tests"

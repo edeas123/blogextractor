@@ -5,9 +5,11 @@ from blogextractor.resources import (
     CommentResource,
 )
 from blogextractor.config import load_config
+from blogextractor._version import API_PATH
 
 
 def create_app(config) -> Flask:
+
     # create the app
     app = Flask(
         __name__
@@ -20,14 +22,14 @@ def create_app(config) -> Flask:
 
     api.add_resource(
         ForumResource,
-        '/{0}/forum/'.format(
-            config.API_PATH
+        '{0}/forum/'.format(
+            API_PATH
         )
     )
     api.add_resource(
         CommentResource,
-        '/{0}/comment/'.format(
-            config.API_PATH
+        '{0}/comment/'.format(
+            API_PATH
         )
     )
 
@@ -38,10 +40,3 @@ def uwsgi(environ, start_response):
     app = create_app(load_config())
 
     return app.wsgi_app(environ, start_response)
-
-
-if __name__ == "__main__":
-
-    config = load_config()
-    app = create_app(config)
-    app.run(port=config.PORT, debug=config.DEBUG)

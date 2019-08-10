@@ -1,29 +1,26 @@
 import os
-import yaml
 
 
 class Config(object):
 
-    def __init__(self, config):
-        for k, v in config.items():
-            setattr(self, k, v)
-
-    # defines the default config fields
-    PORT = 5000
-
-
-# get the project root directory
-PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# define the default config file
-CONFIG_FILE_NAME = "environment_{}.yml".format(
-    os.environ.get('APP_ENVIRONMENT', 'local')
-)
-DEFAULT_CONFIG_FILE = os.path.join(PROJECT_DIR, CONFIG_FILE_NAME)
+    # flask settings
+    PORT = os.environ.get('PORT', 5000)
+    DEBUG = os.environ.get('DEBUG', True)
+    TESTING = os.environ.get('TESTING', True)
+    ENV = os.environ.get('ENV', "development")
 
 
-def load_config(config_file=DEFAULT_CONFIG_FILE):
-    with open(config_file, 'r') as yml_file:
-        config = Config(yaml.load(yml_file))
+class ProductionConfig(Config):
 
-    return config
+    # flask settings
+    PORT = os.environ.get('PORT', 5000)
+    DEBUG = os.environ.get('DEBUG', False)
+    TESTING = os.environ.get('TESTING', False)
+    ENV = os.environ.get('ENV', "production")
+
+
+def load_config() -> Config:
+    if os.environ.get('APP_ENV') in ["docker", "kubernetes"]:
+        return ProductionConfig()
+
+    return Config()
