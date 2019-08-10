@@ -7,8 +7,9 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Linting
-          command: tox -e flake8
+          command: |
+            pip install tox
+            tox -e flake8
   mypy_test:
     docker:
       - image: python:3.6.6-stretch
@@ -17,7 +18,9 @@ jobs:
       - checkout
       - run:
           name: Static Typing
-          command: tox -e mypy
+          command: |
+            pip install tox
+            tox -e mypy
   unit_test:
     docker:
       - image: python:3.6.6-stretch
@@ -26,7 +29,9 @@ jobs:
       - checkout
       - run:
           name: Unit
-          command: tox -e unit
+          command: |
+            pip install tox
+            tox -e unit
   integration_test:
     docker:
       - image: python:3.6.6-stretch
@@ -35,7 +40,9 @@ jobs:
       - checkout
       - run:
           name: Integration
-          command: tox -e integration
+          command: |
+            pip install tox
+            tox -e integration
   deploy:
     docker:
       - image: docker:18.06-git
