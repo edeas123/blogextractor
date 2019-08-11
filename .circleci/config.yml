@@ -2,41 +2,53 @@ version: 2
 jobs:
   flake8_test:
     docker:
-      - image: edeas123/blogbase
+      - image: python:3.6.6-stretch
     working_directory: ~/project
     steps:
       - checkout
       - run:
-          name: Linting
-          command: tox -e flake8
+          command: |
+            pip install tox
+            tox -e flake8
   mypy_test:
     docker:
-      - image: edeas123/blogbase
+      - image: python:3.6.6-stretch
     working_directory: ~/project
     steps:
       - checkout
       - run:
           name: Static Typing
-          command: tox -e mypy
+          command: |
+            pip install tox
+            tox -e mypy
+  unit_test:
+    docker:
+      - image: python:3.6.6-stretch
+    working_directory: ~/project
+    steps:
+      - checkout
+      - run:
+          name: Unit
+          command: |
+            pip install tox
+            tox -e unit
   integration_test:
     docker:
-      - image: edeas123/blogbase
+      - image: python:3.6.6-stretch
     working_directory: ~/project
     steps:
       - checkout
       - run:
           name: Integration
-          command: tox -e integration
+          command: |
+            pip install tox
+            tox -e integration
   deploy:
     docker:
       - image: docker:18.06-git
     working_directory: ~/project
     steps:
       - checkout
-      - run:
-          name: Install CLI tools
-          command: |
-            apk --update add py-pip
 #      - run:
 #          name: Build and Push to the TestPyPI
 #          command: |
@@ -47,23 +59,11 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: Install CLI tools
-          command: pip install awscli
-      - run:
-          name: Login to AWS ECR
-          command: eval `aws ecr get-login --no-include-email`
-      - run:
           name: Login to docker hub
           command: docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
       - run:
           name: Build docker image
           command: docker build -t blogextractor .
-      - run:
-          name: Push docker image to AWS ECR
-          command: |
-            REVISION_TAG=$CIRCLE_SHA1
-            docker tag blogextractor $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blogextractor:latest
-            docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blogextractor:latest
       - run:
           name: Push docker image to docker hub
           command: |
@@ -77,6 +77,7 @@ workflows:
     jobs:
       - flake8_test
       - mypy_test
+      - unit_test
       - integration_test
       - deploy:
           context: edeas123
@@ -87,4 +88,5 @@ workflows:
           requires:
             - flake8_test
             - mypy_test
+            - unit_test
             - integration_test

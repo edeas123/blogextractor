@@ -2,9 +2,19 @@ from flask_restful import Resource, reqparse
 from marshmallow.exceptions import ValidationError
 from requests import HTTPError
 from datetime import datetime
+from blogextractor._version import API_PATH
 
 
 class BaseResource(Resource):
+
+    _item = ""
+    _endpoint = ""
+
+    @classmethod
+    def add_resource(cls, api):
+        list_endpoint = f'{API_PATH}/{cls._endpoint}'
+        single_endpoint = f'{list_endpoint}/{cls._item}'
+        api.add_resource(cls, list_endpoint, single_endpoint)
 
     def get(self):
 

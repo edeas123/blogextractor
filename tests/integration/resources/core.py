@@ -1,12 +1,27 @@
+import unittest
 import os
+
 from urllib.parse import urlparse
 from requests.models import Response
 from unittest.mock import Mock
 
-DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
+from blogextractor.api_main import create_app
+from blogextractor.config import load_config
+
+DATA_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data'
+)
 
 
-def get_page(url: str):
+class ResourceTestCase(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        config = load_config()
+        cls.app = create_app(config=config)
+
+
+def get_page(url):
     p_url = urlparse(url)
     filename = os.path.join(
         DATA_DIR,
