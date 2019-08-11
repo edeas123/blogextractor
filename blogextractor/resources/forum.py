@@ -9,6 +9,7 @@ from blogextractor.util import get_domain
 class ForumResource(BaseResource):
 
     schema = ForumSchema()
+    _endpoint = "forum"
     many = False
 
     def read(self, url):
