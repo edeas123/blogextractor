@@ -5,7 +5,6 @@ from blogextractor.resources import (
     CommentResource,
 )
 from blogextractor.config import load_config
-from blogextractor._version import API_PATH
 
 
 def create_app(config) -> Flask:
@@ -20,18 +19,8 @@ def create_app(config) -> Flask:
 
     api = Api(app)
 
-    api.add_resource(
-        ForumResource,
-        '{0}/forum/'.format(
-            API_PATH
-        )
-    )
-    api.add_resource(
-        CommentResource,
-        '{0}/comment/'.format(
-            API_PATH
-        )
-    )
+    ForumResource.add_resource(api)
+    CommentResource.add_resource(api)
 
     return app
 

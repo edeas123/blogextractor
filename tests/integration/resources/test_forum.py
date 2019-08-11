@@ -1,6 +1,7 @@
-from tests.resources.core import ResourceTestCase
+from tests.integration.resources.core import ResourceTestCase
+from tests.integration.resources.core import get_page
 from unittest.mock import patch
-from tests.util import get_page
+from blogextractor._version import API_PATH
 
 
 class NairalandForumResourceTestCase(ResourceTestCase):
@@ -55,9 +56,7 @@ class NairalandForumResourceTestCase(ResourceTestCase):
 
         with self.app.test_client() as c:
             resp = c.get(
-                'api/v1/forum/?url={0}'.format(
-                    self.url
-                )
+                f'{API_PATH}/forum?url={self.url}'
             )
 
             # assert that you got a 200 status code

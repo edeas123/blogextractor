@@ -1,6 +1,7 @@
 from tests.integration.resources.core import ResourceTestCase
-from tests.util import get_page
+from tests.integration.resources.core import get_page
 from unittest.mock import patch
+from blogextractor._version import API_PATH
 
 
 class NairalandCommentResourceTestCase(ResourceTestCase):
@@ -42,9 +43,7 @@ class NairalandCommentResourceTestCase(ResourceTestCase):
 
         with self.app.test_client() as c:
             resp = c.get(
-                'api/v1/comment/?url={0}'.format(
-                    self.url
-                )
+                f'{API_PATH}/comment?url={self.url}'
             )
 
             # assert that you got a 200 status code

@@ -9,6 +9,8 @@ from blogextractor.util import get_domain
 class CommentResource(BaseResource):
 
     schema = CommentSchema()
+    _endpoint = "comment"
+
     many = True
 
     def read(self, url):
