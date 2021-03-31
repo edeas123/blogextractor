@@ -16,7 +16,7 @@ setuptools.setup(
         'bs4==0.0.1',
         'Flask==1.0.2',
         'Flask-RESTful==0.3.6',
-        'lxml==4.2.4',
+        'lxml==4.6.3',
         'marshmallow==3.0.0b13',
         'PyYAML==5.1',
         'requests==2.20.0',
