@@ -20,7 +20,7 @@ setuptools.setup(
         'marshmallow==3.0.0b13',
         'PyYAML==5.1',
         'requests==2.20.0',
-        'urllib3==1.24.2',
+        'urllib3==1.26.5',
         'uwsgi==2.0.17.1'
     ],
     classifiers=[
